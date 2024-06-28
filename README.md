@@ -3,6 +3,7 @@
 [![reference Zig](https://img.shields.io/badge/zig%20-0.11.0-orange)](https://ziglang.org/)
 [![reference Zig](https://img.shields.io/badge/zigdoc%20-pages-orange)](https://ziglang.org/)
 [![build](https://github.com/dgv/zig-project-template/actions/workflows/build.yml/badge.svg)](https://github.com/dgv/zig-project-template/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/dgv/zig-project-template/branch/main/graph/badge.svg)](https://codecov.io/gh/dgv/zig-project-template)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ### Badges Roadmap
@@ -19,7 +20,7 @@ On Zig 0.12.0 [`minimum_zig_version`](https://github.com/dgv/zig-project-templat
     // This field is optional.
     // This is currently advisory only; Zig does not yet do anything
     // with this value.
-    .minimum_zig_version = "0.11.0",
+    .minimum_zig_version = "0.12.0",
 ```
 
 ### Documentation
@@ -76,7 +77,7 @@ jobs:
       - name: Setup Zig
         uses: goto-bus-stop/setup-zig@v2
         with:
-          version: 0.11.0
+          version: 0.12.0
 
       - name: Run Tests
         run: |
