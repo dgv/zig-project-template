@@ -46,9 +46,9 @@ Using following configuration with [Github Actions Matrix](https://docs.github.c
 name: build
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
   schedule:
     - cron: 0 9 * * *
 jobs:
@@ -87,6 +87,26 @@ jobs:
 https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/adding-a-workflow-status-badge
 
 ### Code Coverage
+
+After build using flag `-Dtest-coverage=true`, we can use [kconv](https://github.com/SimonKagstrom/kcov) for analysis and submit the results to [codeconv](https://github.com/SimonKagstrom/kcov/blob/master/doc/codecov.md) adding following steps:
+
+```yaml
+- name: Download kcov
+  if: ${{ matrix.os == 'ubuntu-latest' }}
+  run: |
+    sudo apt-get install -y kcov
+
+- name: Upload Codecov
+  if: ${{ matrix.os == 'ubuntu-latest' }}
+  env:
+    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  run: |
+    curl -Os https://uploader.codecov.io/latest/linux/codecov
+    chmod +x codecov
+    ./codecov -t ${CODECOV_TOKEN}
+```
+
+Better converage analysis is possible using [kcov-zig](https://github.com/liyu1981/kcov/tree/kcov-zig) fork, wip...
 
 ### License
 You can just use [Markdown License badges](https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba) as reference.
