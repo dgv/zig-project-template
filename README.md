@@ -1,6 +1,6 @@
 # zig-project-template
 
-[![reference Zig](https://img.shields.io/badge/zig%20-0.11.0-orange)](https://ziglang.org/)
+[![reference Zig](https://img.shields.io/badge/zig%20-0.12.0-orange)](https://ziglang.org/)
 [![reference Zig](https://img.shields.io/badge/zigdoc%20-pages-orange)](https://ziglang.org/)
 [![build](https://github.com/dgv/zig-project-template/actions/workflows/build.yml/badge.svg)](https://github.com/dgv/zig-project-template/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/dgv/zig-project-template/branch/main/graph/badge.svg)](https://codecov.io/gh/dgv/zig-project-template)
@@ -10,7 +10,7 @@
 - [X] [zig version](#version)
 - [X] [zig doc](#cocumentation)
 - [X] [continuos integration](#continuos-integration)
-- [ ] [code coverage](#code-coverage)
+- [X] [code coverage](#code-coverage)
 - [X] [license](#license)
 
 ### Version
@@ -77,7 +77,7 @@ jobs:
       - name: Setup Zig
         uses: goto-bus-stop/setup-zig@v2
         with:
-          version: 0.12.0
+          version: master
 
       - name: Run Tests
         run: |
@@ -89,7 +89,7 @@ https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/addi
 
 ### Code Coverage
 
-After build using flag `-Dtest-coverage=true`, we can use [kconv](https://github.com/SimonKagstrom/kcov) for analysis and submit the results to [codeconv](https://github.com/SimonKagstrom/kcov/blob/master/doc/codecov.md) adding following steps:
+After build using flag `-Dtest-coverage=true` (supported on Zig master version), we can use [kconv](https://github.com/SimonKagstrom/kcov) for analysis and submit the results to [codeconv](https://github.com/SimonKagstrom/kcov/blob/master/doc/codecov.md) adding following steps:
 
 ```yaml
 - name: Download kcov
