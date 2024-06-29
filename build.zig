@@ -94,4 +94,17 @@ pub fn build(b: *std.Build) void {
     const test_step = b.step("test", "Run unit tests");
     test_step.dependOn(&run_lib_unit_tests.step);
     test_step.dependOn(&run_exe_unit_tests.step);
+
+    // Converage flag/step for kcov analysis
+    const coverage = b.option(bool, "coverage", "Generate test coverage") orelse false;
+    if (coverage) {
+        const run_cover = b.addSystemCommand(&.{
+            "kcov",
+            "--clean",
+            "--include-pattern=src/",
+            "cover",
+        });
+        run_cover.addArtifactArg(lib_unit_tests);
+        run_lib_unit_tests.step.dependOn(&run_cover.step);
+    }
 }

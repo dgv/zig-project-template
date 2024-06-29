@@ -41,7 +41,7 @@ https://sudw1n.gitlab.io/posts/zig-build-docs/
 
 ### Continuos Integration
 
-Using following configuration with [Github Actions Matrix](https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs) and [build-zig](https://github.com/marketplace/actions/setup-zig) (note: using annoted version and emitting debugging information on linux for further coverage analysis):
+Using following configuration with [Github Actions Matrix](https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs) and [build-zig](https://github.com/marketplace/actions/setup-zig):
 
 ```yaml
 name: build
@@ -89,14 +89,29 @@ https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/addi
 
 ### Code Coverage
 
-After build using flag `-Dtest-coverage=true` (supported on Zig master version), we can use [kconv](https://github.com/SimonKagstrom/kcov) for analysis and submit the results to [codeconv](https://github.com/SimonKagstrom/kcov/blob/master/doc/codecov.md) adding following steps:
-
+We can use [kconv](https://github.com/SimonKagstrom/kcov) integrated on `build.zig` during the tests with `-Dcoverage=true` flag, then submit the generated results on `cover` directorty to [codeconv](https://github.com/SimonKagstrom/kcov/blob/master/doc/codecov.md) using uploader utility adding following steps:
+[build.zig](https://github.com/dgv/zig-project-template/blob/main/build.zig.zon#L15-L18)
+```zig
+// Converage step to generate debug messages for codecov using kcov
+const coverage = b.option(bool, "coverage", "Generate test coverage") orelse false;
+if (coverage) {
+    const run_cover = b.addSystemCommand(&.{
+        "kcov",
+        "--clean",
+        "--include-pattern=src/",
+        "cover",
+    });
+    run_cover.addArtifactArg(exe_unit_tests);
+    run_exe_unit_tests.step.dependOn(&run_cover.step);
+}
+```
+  [build.yml](https://github.com/dgv/zig-project-template/blob/main/.github/workflows/build.yml#L36-L53)
 ```yaml
 - name: Download kcov
   if: ${{ matrix.os == 'ubuntu-latest' }}
   run: |
     sudo apt-get install -y kcov
-
+...
 - name: Upload Codecov
   if: ${{ matrix.os == 'ubuntu-latest' }}
   env:
@@ -108,6 +123,9 @@ After build using flag `-Dtest-coverage=true` (supported on Zig master version),
 ```
 
 Better converage analysis is possible using [kcov-zig](https://github.com/liyu1981/kcov/tree/kcov-zig) fork, wip...
+
+https://zig.news/squeek502/code-coverage-for-zig-1dk1 <br>
+https://zig.news/liyu1981/tiny-change-to-kcov-for-better-covering-zig-hjm
 
 ### License
 You can just use [Markdown License badges](https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba) as reference.
