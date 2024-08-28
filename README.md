@@ -1,7 +1,7 @@
 # zig-project-template
 
 [![reference Zig](https://img.shields.io/badge/zig%20-0.12.0-orange)](https://ziglang.org/)
-[![reference Zig](https://img.shields.io/badge/zigdoc%20-pages-orange)](https://ziglang.org/)
+[![doc pages](https://img.shields.io/badge/zigdoc%20-pages-orange)](http://dgv.dev.br/zig-project-template/)
 [![build](https://github.com/dgv/zig-project-template/actions/workflows/build.yml/badge.svg)](https://github.com/dgv/zig-project-template/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/dgv/zig-project-template/branch/main/graph/badge.svg)](https://codecov.io/gh/dgv/zig-project-template)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
